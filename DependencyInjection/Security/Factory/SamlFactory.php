@@ -14,6 +14,7 @@ class SamlFactory extends AbstractFactory
     {
         $this->addOption('username_attribute');
         $this->addOption('idp_name', 'default');
+        $this->addOption('authentication_provider', 'hslavich_onelogin_saml.saml_provider');
         $this->addOption('use_attribute_friendly_name', false);
         $this->addOption('check_path', '/saml/acs');
         $this->addOption('user_factory');
@@ -62,8 +63,8 @@ class SamlFactory extends AbstractFactory
     {
         $providerId = 'security.authentication.provider.saml.'.$id;
         $definitionClassname = $this->getDefinitionClassname();
-        $definition = $container->setDefinition($providerId, new $definitionClassname('hslavich_onelogin_saml.saml_provider'))
-            ->replaceArgument(0, new Reference($userProviderId))
+        $definition = $container->setDefinition($providerId, new $definitionClassname($config['authentication_provider']))
+            ->addArgument(new Reference($userProviderId))
             ->addArgument(array(
                  'persist_user' => $config['persist_user']
             ))

@@ -12,8 +12,6 @@ use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 
 class SamlListener extends AbstractAuthenticationListener
 {
-    const IDP_NAME_SESSION_NAME = 'saml_idp_name';
-
     /**
      * @var OneLoginAuthRegistry
      */
@@ -45,9 +43,7 @@ class SamlListener extends AbstractAuthenticationListener
      */
     protected function attemptAuthentication(Request $request)
     {
-        // Get current IdP name or use the single configured IdP
-        $idpName = $request->getSession()->get(self::IDP_NAME_SESSION_NAME, 'default');
-
+        $idpName = $this->options['idp_name'];
         $oneLoginAuth = $this->authRegistry->getIdpAuth($idpName);
 
         $oneLoginAuth->processResponse();

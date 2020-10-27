@@ -41,7 +41,13 @@ class SamlController extends AbstractController
             throw new \RuntimeException($error->getMessage());
         }
 
-        $this->authRegistry->getIdpAuth($idp)->login($session->get('_security.main.target_path'));
+        if ($request->query->has('redirect_uri')) {
+            $redirectUri = $request->query->get('redirect_uri');
+        } else {
+            $redirectUri = $session->get('_security.main.target_path');
+        }
+
+        $this->authRegistry->getIdpAuth($idp)->login($redirectUri);
     }
 
     public function metadataAction($idp = null)

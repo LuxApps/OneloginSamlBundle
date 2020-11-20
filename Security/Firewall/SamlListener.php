@@ -71,6 +71,7 @@ class SamlListener extends AbstractAuthenticationListener
             $username = $attributes[$this->options['username_attribute']][0];
         } else {
             $username = $oneLoginAuth->getNameId();
+            $token->setNameId($username);
         }
         $token->setUser($username);
 

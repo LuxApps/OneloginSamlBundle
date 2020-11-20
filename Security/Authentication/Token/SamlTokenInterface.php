@@ -10,4 +10,9 @@ interface SamlTokenInterface extends TokenInterface
      * @return string
      */
     public function getIdpName();
+
+    /**
+     * @return string
+     */
+    public function getNameId();
 }

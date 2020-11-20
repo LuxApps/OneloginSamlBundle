@@ -68,11 +68,13 @@ class SamlProvider implements AuthenticationProviderInterface
             if ($user instanceof SamlUserInterface) {
                 $user->setSamlAttributes($token->getAttributes());
             }
-            
+
+            $this->checkUser($user, $token);
+
             $authenticatedToken = $this->tokenFactory->createToken(
                 $user,
                 $token->getAttributes(),
-                $user->getRoles(),
+                $this->getRoles($user),
                 $token->getIdpName()
             );
             $authenticatedToken->setAuthenticated(true);
@@ -81,6 +83,11 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         throw new AuthenticationException('The authentication failed.');
+    }
+
+    public function getRoles(SamlUserInterface $user)
+    {
+        return $user->getRoles();
     }
 
     public function supports(TokenInterface $token)
@@ -114,5 +121,9 @@ class SamlProvider implements AuthenticationProviderInterface
         }
 
         return $user;
+    }
+
+    protected function checkUser(SamlUserInterface $user, TokenInterface $token)
+    {
     }
 }

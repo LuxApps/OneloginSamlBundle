@@ -47,6 +47,11 @@ class SamlController extends AbstractController
             $redirectUri = $session->get('_security.main.target_path');
         }
 
+        // Don't redirect to the login page to avoid potential loops
+        if (strpos($redirectUri, $request->getPathInfo()) !== false)  {
+            $redirectUri = null;
+        }
+
         $this->authRegistry->getIdpAuth($idp)->login($redirectUri);
     }
 

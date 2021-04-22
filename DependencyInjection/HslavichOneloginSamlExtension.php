@@ -21,12 +21,14 @@ class HslavichOneloginSamlExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.php');
+        if(!$config['disabled_bundle']) {
+            $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+            $loader->load('services.php');
 
-        $container->setParameter('hslavich_onelogin_saml.settings', $config);
-        $container->setParameter('hslavich_onelogin_saml.default_idp_name', $config['default_idp']);
-        $this->loadIdentityProviders($config, $container);
+            $container->setParameter('hslavich_onelogin_saml.settings', $config);
+            $container->setParameter('hslavich_onelogin_saml.default_idp_name', $config['default_idp']);
+            $this->loadIdentityProviders($config, $container);
+        }
     }
 
     private function loadIdentityProviders(array $config, ContainerBuilder $container)

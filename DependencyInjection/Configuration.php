@@ -123,6 +123,7 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
+                ->scalarNode('disabled_bundle')->defaultFalse()->end()
                 ->scalarNode('entityId')->end()
                 ->scalarNode('NameIDFormat')->end()
                 ->scalarNode('x509cert')->end()

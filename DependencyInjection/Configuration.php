@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
             })
             ->end()
             ->children()
+                ->scalarNode('disabled_bundle')->defaultFalse()->end()
                 ->scalarNode('default_idp')->defaultValue('default')->end()
                 ->scalarNode('baseurl')->end()
                 ->scalarNode('entityManagerName')->end()
@@ -123,7 +124,6 @@ class Configuration implements ConfigurationInterface
     {
         $node
             ->children()
-                ->scalarNode('disabled_bundle')->defaultFalse()->end()
                 ->scalarNode('entityId')->end()
                 ->scalarNode('NameIDFormat')->end()
                 ->scalarNode('x509cert')->end()

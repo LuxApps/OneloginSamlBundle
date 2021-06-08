@@ -14,8 +14,10 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load('Hslavich\\OneloginSamlBundle\\Security\\', __DIR__.'/../../Security/');
 
-    $services->set(\OneLogin\Saml2\Auth::class)
-        ->args(['%hslavich_onelogin_saml.settings%'])
+    $services->set('onelogin_auth_abstract')
+        ->abstract(true)
+        ->public(true)
+        ->class(\OneLogin\Saml2\Auth::class)
     ;
 
     $services->set(\Hslavich\OneloginSamlBundle\Security\Utils\OneLoginAuthRegistry::class)
@@ -51,9 +53,9 @@ return static function (ContainerConfigurator $container): void {
         ])
     ;
 
-    $services->set(\Hslavich\OneloginSamlBundle\EventListener\Security\SamlLogoutListener::class)
+    /*$services->set(\Hslavich\OneloginSamlBundle\EventListener\Security\SamlLogoutListener::class)
         ->tag('kernel.event_listener', ['event' => \Symfony\Component\Security\Http\Event\LogoutEvent::class])
-    ;
+    ;*/
 
     $deprecatedAliases = [
         'hslavich_onelogin_saml.user_provider' => \Hslavich\OneloginSamlBundle\Security\User\SamlUserProvider::class,

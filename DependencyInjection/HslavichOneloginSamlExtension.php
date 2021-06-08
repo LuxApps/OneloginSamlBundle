@@ -60,7 +60,7 @@ class HslavichOneloginSamlExtension extends Extension
 
     private function createAuthDefinition(ContainerBuilder $container, $id, array $config, $defaultIdp)
     {
-        $def = new ChildDefinition(\OneLogin\Saml2\Auth::class);
+        $def = new ChildDefinition('onelogin_auth_abstract');
         $def->setArgument(0, $config);
         $def->addTag(SpResolverCompilerPass::TAG_NAME, [
             'name' => $id,
